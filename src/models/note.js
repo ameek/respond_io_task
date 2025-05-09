@@ -1,15 +1,12 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 class Note extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
   static associate(models) {
-    // Define associations here
-    // Example: this.belongsTo(models.User, { foreignKey: 'userId' });
+    Note.belongsTo(models.User, {
+      foreignKey: "userId",
+      as: "user",
+    });
   }
 }
 
@@ -26,6 +23,7 @@ Note.init(
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
+      // Optional: Add full-text index later via migration
     },
     version: {
       type: DataTypes.INTEGER,
@@ -38,7 +36,14 @@ Note.init(
   },
   {
     sequelize,
-    modelName: 'Note',
+    modelName: "Note",
+    indexes: [
+      {
+        name: "note_fulltext_idx",
+        using: "FULLTEXT",
+        fields: ["title", "content"],
+      },
+    ],
   }
 );
 

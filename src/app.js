@@ -4,6 +4,9 @@ import cors from "cors";
 import helmet from "helmet";
 import sequelize from "./config/db.js";
 import redisClient from "./config/redis.js";
+// Routes
+import authRoute from './routes/auth.route.js';
+import noteRoute from './routes/note.route.js';
 
 dotenv.config({ path: "./src/.env" });
 
@@ -41,6 +44,10 @@ redisClient
 app.get("/", (req, res) => {
   res.status(200).json({ HealthStatus: "API health check OK" });
 });
+
+// Register routes
+app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/notes', noteRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
