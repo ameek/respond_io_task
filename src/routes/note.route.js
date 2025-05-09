@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.use(authenticate);
 
-router.get('/notes', NoteController.getAll);
-router.get('/notes/:id', NoteController.getOne);
-router.post('/notes', NoteController.create);
-router.put('/notes/:id', NoteController.update);
-router.delete('/notes/:id', NoteController.delete);
+router.get('/', NoteController.getAll);
+router.get('/:id', NoteController.getOne);
+router.post('/', NoteController.create);
+router.put('/:id', NoteController.update);
+router.delete('/:id', NoteController.delete);
 
-router.post('/notes/:id/revert', NoteController.revert);
+router.post('/:id/revert', NoteController.revert);
 
 export default router;

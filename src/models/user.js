@@ -1,23 +1,28 @@
-// src/models/User.js
-import { DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
 
-export default (sequelize) => {
-  const User = sequelize.define('User', {
+class User extends Model {
+  static associate(models) {
+    User.hasMany(models.Note, { foreignKey: 'userId', as: 'notes' });
+  }
+}
+
+User.init(
+  {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  }, {
-    timestamps: true,
-  });
+  },
+  {
+    sequelize,
+    modelName: 'User',
+  }
+);
 
-  return User;
-};
+export default User;
