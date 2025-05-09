@@ -1,12 +1,19 @@
-import { Sequelize } from 'sequelize';
-
-export const up = async (queryInterface) => {
-  await queryInterface.createTable('Notes', {
+export const up = async (queryInterface, Sequelize) => {
+  await queryInterface.createTable('NoteVersions', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
+    },
+    noteId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Notes',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
     },
     userId: {
       type: Sequelize.INTEGER,
@@ -19,15 +26,15 @@ export const up = async (queryInterface) => {
     },
     title: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     content: {
       type: Sequelize.TEXT,
+      allowNull: false,
     },
     version: {
       type: Sequelize.INTEGER,
-    },
-    isDeleted: {
-      type: Sequelize.BOOLEAN,
+      allowNull: false,
     },
     createdAt: {
       allowNull: false,
@@ -41,5 +48,5 @@ export const up = async (queryInterface) => {
 };
 
 export const down = async (queryInterface) => {
-  await queryInterface.dropTable('Notes');
+  await queryInterface.dropTable('NoteVersions');
 };

@@ -4,8 +4,10 @@ import sequelize from '../config/db.js';
 class User extends Model {
   static associate(models) {
     User.hasMany(models.Note, { foreignKey: 'userId', as: 'notes' });
+    User.hasMany(models.NoteVersion, { foreignKey: 'userId', as: 'noteVersions' });
   }
 }
+
 
 User.init(
   {
