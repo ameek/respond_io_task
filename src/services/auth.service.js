@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/server.config.js';
 import User from '../models/user.js';
