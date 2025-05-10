@@ -1,0 +1,41 @@
+{
+  "name": "respond_io_task",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "- Create the necessary npm installations.     - Set up the Dockerfile and docker-compose      - create the env for required endpoints",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "npm ci --only=production",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ameek/respond_io_task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ameek/respond_io_task/issues"
+  },
+  "homepage": "https://github.com/ameek/respond_io_task#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.1",
+    "redis": "^5.0.1",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
