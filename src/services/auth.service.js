@@ -79,14 +79,12 @@ class AuthService {
       expiresIn: REFRESH_TOKEN_EXPIRES_IN,
     });
 
-    console.log("Generated refresh token:", refreshToken); // Debugging log
 
     // Store refresh token in Redis
     await redisClient.set(`refreshToken:${user.id}`, refreshToken, {
       EX: parseInt(REFRESH_TOKEN_EXPIRES_IN, 10),
     });
 
-    console.log("Refresh token stored in Redis"); // Debugging log
 
     return { accessToken, refreshToken };
   }
@@ -98,13 +96,10 @@ class AuthService {
    */
   static async validateRefreshToken(refreshToken) {
     try {
-      console.log("Validating refresh token:", refreshToken); // Debugging log
 
       const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
-      console.log("Decoded refresh token:", decoded); // Debugging log
 
       const storedToken = await redisClient.get(`refreshToken:${decoded.id}`);
-      console.log("Stored refresh token in Redis:", storedToken); // Debugging log
 
       if (storedToken !== refreshToken) {
         throw new Error("Invalid refresh token");
