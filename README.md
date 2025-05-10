@@ -118,3 +118,6 @@ docker-compose up --build
 - `PUT /api/v1/notes/:id`: Update a note.
 - `DELETE /api/v1/notes/:id`: Soft delete a note.
 - `POST /api/v1/notes/:id/revert`: Revert a note to a previous version.
+s
+## PostMan documentation for endpoints
+<https://documenter.getpostman.com/view/5953045/2sB2j98UwH>
