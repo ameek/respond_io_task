@@ -1,4 +1,4 @@
-import NoteService from '../services/note.service.js';
+import NoteService from "../services/note.service.js";
 
 class NoteController {
   static async getAll(req, res) {
@@ -13,9 +13,12 @@ class NoteController {
   static async getOne(req, res) {
     try {
       const note = await NoteService.getNoteById(req.userId, req.params.id);
-      if (!note) return res.status(404).json({ message: 'Note not found' });
+      if (!note) return res.status(404).json({ message: "Note not found" });
       res.json(note);
     } catch (error) {
+      if (error.message.includes("Note not found")) {
+        return res.status(404).json({ message: error.message });
+      }
       res.status(500).json({ message: error.message });
     }
   }
@@ -42,7 +45,7 @@ class NoteController {
       );
       res.json(updatedNote);
     } catch (error) {
-      if (error.message.includes('Conflict')) {
+      if (error.message.includes("Conflict")) {
         return res.status(409).json({ message: error.message });
       }
       res.status(500).json({ message: error.message });
@@ -52,13 +55,15 @@ class NoteController {
   static async delete(req, res) {
     try {
       await NoteService.deleteNote(req.userId, req.params.id);
-      res.json({ message: 'Note soft-deleted successfully' });
+      res.json({ message: "Note soft-deleted successfully" });
     } catch (error) {
+      if (error.message.includes("Note not found or already deleted")) {
+        return res.status(404).json({ message: error.message });
+      }
       res.status(500).json({ message: error.message });
     }
   }
 
-  // Optional: Only include if version history is enabled
   static async revert(req, res) {
     try {
       const { version } = req.body;
@@ -69,7 +74,17 @@ class NoteController {
       );
       res.json(revertedNote);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+  static async search(req, res) {
+    try {
+      const { keyword } = req.query;
+      const notes = await NoteService.searchNotes(req.userId, keyword);
+      res.json(notes);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
   }
 }

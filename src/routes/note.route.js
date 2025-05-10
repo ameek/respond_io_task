@@ -13,5 +13,6 @@ router.put('/:id', NoteController.update);
 router.delete('/:id', NoteController.delete);
 
 router.post('/:id/revert', NoteController.revert);
+router.get('/search', NoteController.search);
 
 export default router;
