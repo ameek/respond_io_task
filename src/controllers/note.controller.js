@@ -82,6 +82,9 @@ class NoteController {
     try {
       const { keyword } = req.query;
       const notes = await NoteService.searchNotes(req.userId, keyword);
+      if (!notes || notes.length === 0) {
+        return res.status(404).json({ message: "No notes found" });
+      } 
       res.json(notes);
     } catch (error) {
       res.status(400).json({ message: error.message });

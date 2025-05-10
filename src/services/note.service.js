@@ -2,7 +2,7 @@ import NoteVersion from "../models/NoteVersion.js";
 import Note from "../models/note.js";
 import redisClient from "../config/redis.js";
 import sequelize from "../config/db.js";
-import { where } from "sequelize";
+import { Op } from "sequelize";
 
 class NoteService {
   /**
@@ -260,14 +260,16 @@ class NoteService {
       where: {
         userId,
         isDeleted: false,
-        [Sequelize.Op.or]: [
-          { title: { [Sequelize.Op.like]: `%${keyword}%` } },
-          { content: { [Sequelize.Op.like]: `%${keyword}%` } },
+        [Op.or]: [
+          { title: { [Op.like]: `%${keyword}%` } },
+          { content: { [Op.like]: `%${keyword}%` } },
         ],
       },
       order: [["createdAt", "DESC"]],
     });
-
+    if (!notes) {
+      throw new Error("No notes found");
+    }
     return notes;
   }
 

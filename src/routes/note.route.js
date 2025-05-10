@@ -7,12 +7,12 @@ const router = express.Router();
 router.use(authenticate);
 
 router.get('/', NoteController.getAll);
-router.get('/:id', NoteController.getOne);
 router.post('/', NoteController.create);
+router.get('/search', NoteController.search);
+router.get('/:id', NoteController.getOne);
 router.put('/:id', NoteController.update);
 router.delete('/:id', NoteController.delete);
 
 router.post('/:id/revert', NoteController.revert);
-router.get('/search', NoteController.search);
 
 export default router;
