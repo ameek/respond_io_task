@@ -17,8 +17,6 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-console.log("DB_USER:", process.env.DB_USER);
-console.log("REDIS_PASSWORD:", process.env.REDIS_PASSWORD);
 
 // Test DB connection
 sequelize
